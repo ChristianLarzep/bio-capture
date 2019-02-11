@@ -1,0 +1,40 @@
+.page-header {
+  width: 100%;
+  height: 100px;
+  font-size: 28px;
+  background: 	#C0C0C0;
+}
+
+.logo{
+  position: absolute;
+  left: 10%;
+  top: 3%;
+  display: inline-block;
+}
+
+.btn-talk{
+  width:  50%;
+  display: inline-block;
+  margin-left: 5%;
+}
+
+#div_language{
+  width: 35%;
+  display: inline-block;
+}
+
+select {
+  width: 100%;
+  padding: 16px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.options{
+  width: 25%;
+  margin-left: 70%;
+  margin-bottom: 3%;
+  display: inline-block;
+
+}

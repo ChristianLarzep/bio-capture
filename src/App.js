@@ -1,25 +1,32 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { Provider } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form';
+
+import logo from './assets/intersys_Logo.png';
+import FormDemo from './js/pages/formDemo';
+
 import './App.css';
 
+const data = require('./js/configurations/formVoice/formVoiceFields.json');
+
+const reducers = {
+  form: formReducer,
+};
+const reducer = combineReducers(reducers);
+const store = createStore(reducer);
+
 class App extends Component {
+  submit = value => {
+    console.log(value);
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Provider store={store}>
+          <FormDemo onSubmit={this.submit} fields={data} title="Bio capture" logo={logo} />
+        </Provider>
       </div>
     );
   }

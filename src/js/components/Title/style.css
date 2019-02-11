@@ -1,0 +1,49 @@
+h1 {
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 30px;
+}
+
+h3 {
+  font-size: 28px;
+}
+
+h4 {
+  font-size: 26px;
+}
+
+h5 {
+  font-size: 24px;
+}
+
+h6 {
+  font-size: 22px;
+}
+
+.title {
+  text-align: center;
+}
+
+.title-icon {
+  display: inline-block;
+  margin-right: 22px;
+  max-width: 37px;
+  vertical-align: middle;
+}
+
+.title-text {
+    display: inline-block;
+    font-family: 'Work Sans';
+    font-weight:500;
+    color:blue;
+  }
+
+  .blue{
+    color: #2A4284;
+  }
+
+  .purple{
+    color: #9145B7;
+  }

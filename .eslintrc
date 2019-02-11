@@ -1,0 +1,53 @@
+{
+  // https://github.com/airbnb/javascript
+  "extends": ["airbnb"],
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "arrow-body-style": ["error", "as-needed", { "requireReturnForObjectLiteral": true }],
+    "arrow-parens": ["error", "as-needed"],
+    "jsx-quotes": ["error", "prefer-double"],
+    "max-lines": ["error", {"max": 300}],
+    "max-len": ["error", 120],
+    "object-curly-newline": ["error", { "consistent": true }],
+    "camelcase": ["error", { "properties": "never" }],
+    "import/order": [
+      "error", {
+        "groups": ["builtin", "external", "parent", "sibling", "index", "internal"],
+        "newlines-between": "always",
+      }
+    ],
+    "jsx-a11y/anchor-is-valid": [ "error", { "components": [ "Link" ], "specialLink": [ "to" ] } ],
+
+    "react/require-default-props": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/prefer-stateless-function": [2, { "ignorePureComponents": false }],
+    "react/sort-prop-types": [2, {
+      "requiredFirst": false,
+      "ignoreCase": true,
+      "sortShapeProp": false,
+      "callbacksLast": true
+    }],
+    "react/prop-types": [2, {
+      ignore: [
+        "id",
+        "className",
+        "openModal",
+        "closeModal",
+        "modalAction",
+        "history",
+        "match",
+        "valid",
+        "invalid",
+        "pristine",
+        "change",
+        "reset",
+        "handleSubmit",
+        "pageSpinner"
+      ]
+    }]
+  }
+}

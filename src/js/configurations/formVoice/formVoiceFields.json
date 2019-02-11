@@ -1,0 +1,42 @@
+{
+  "textFields":[
+    {
+      "id":"name",
+      "name":"name",
+      "type":"text",
+      "label":"Full name",
+      "question":"What is your name?",
+      "errorText":"Name required",
+      "className": "col-3"
+    },
+    {
+      "id":"role",
+      "name":"role",
+      "type":"text",
+      "label":"Role",
+      "question":"What is your role?",
+      "errorText":"Role required",
+      "className": "col-3"
+    },
+    {
+      "id":"profile",
+      "name":"profile",
+      "type":"text",
+      "label":"Profile",
+      "question":"Describe your self",
+      "errorText":"Profile required",
+      "className": "col-1-textarea",
+      "multiLine": true
+    },
+    {
+      "id":"techskill",
+      "name":"techskill",
+      "type":"text",
+      "label":"Technical skills",
+      "question":"What technical skill do you have?",
+      "errorText":"Skill required",
+      "className": "col-2-list",
+      "confirmQuestion": "Do you want to add another technical skill?"
+    }
+  ]
+}
