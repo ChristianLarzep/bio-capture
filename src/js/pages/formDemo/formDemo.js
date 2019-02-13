@@ -287,10 +287,3 @@ class FormDemo extends Component {
 }
 
 export default FormDemo;
-// https://stackoverflow.com/questions/38364400/index-inside-map-function
-// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_two_columns_flex
-// dejar en objetos jsno iterables name,id,question y confonformQuest y poner un atributo list: [] que sera la lista
-// de objetos iterables con los datos necesarios para los textField, al renderizar el id
-// y name se cambiaran con un resultIndex
-// para que sean unicos
-// Solo habra que cambiar getInputs y appendField

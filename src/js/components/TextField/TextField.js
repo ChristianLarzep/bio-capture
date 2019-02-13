@@ -61,6 +61,7 @@ TextField.propTypes = {
   disabled: PropTypes.bool,
   errorText: PropTypes.node,
   id: PropTypes.string.isRequired,
+  iterable: PropTypes.bool,
   label: PropTypes.node,
   multiLine: PropTypes.bool,
   name: PropTypes.string.isRequired,
