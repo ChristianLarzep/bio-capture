@@ -10,7 +10,7 @@
     "arrow-body-style": ["error", "as-needed", { "requireReturnForObjectLiteral": true }],
     "arrow-parens": ["error", "as-needed"],
     "jsx-quotes": ["error", "prefer-double"],
-    "max-lines": ["error", {"max": 300}],
+    "max-lines": ["error", {"max": 350}],
     "max-len": ["error", 120],
     "object-curly-newline": ["error", { "consistent": true }],
     "camelcase": ["error", { "properties": "never" }],

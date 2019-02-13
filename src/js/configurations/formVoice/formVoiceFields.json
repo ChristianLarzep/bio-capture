@@ -7,7 +7,7 @@
       "label":"Full name",
       "question":"What is your name?",
       "errorText":"Name required",
-      "className": "col-3"
+      "className": "col-2"
     },
     {
       "id":"role",
@@ -21,11 +21,10 @@
     {
       "id":"profile",
       "name":"profile",
-      "type":"text",
       "label":"Profile",
       "question":"Describe your self",
       "errorText":"Profile required",
-      "className": "col-1-textarea",
+      "className": "col-1",
       "multiLine": true
     },
     {
@@ -35,8 +34,20 @@
       "label":"Technical skills",
       "question":"What technical skill do you have?",
       "errorText":"Skill required",
-      "className": "col-2-list",
-      "confirmQuestion": "Do you want to add another technical skill?"
+      "className": "col-2",
+      "confirmQuestion": "Do you want to add another technical skill?",
+      "iterations":[]
+    },
+    {
+      "id":"softskill",
+      "name":"softskill",
+      "type":"text",
+      "label":"Soft skills",
+      "question":"What soft skill do you have?",
+      "errorText":"Skill required",
+      "className": "col-2",
+      "confirmQuestion": "Do you want to add another soft skill?",
+      "iterations":[]
     }
   ]
 }

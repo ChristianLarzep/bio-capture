@@ -13,8 +13,8 @@ import './style.css';
 class FormDemo extends Component {
   static propTypes = {
 
+    data: PropTypes.shape({}),
     dispatch: PropTypes.func,
-    fields: PropTypes.shape({}),
     handleSubmit: PropTypes.func,
     loading: PropTypes.bool,
     logo: PropTypes.string,
@@ -23,19 +23,21 @@ class FormDemo extends Component {
   };
 
     state = {
-      recognizing: false,
-      recognition: {},
-      counterQuest: 1,
-      questions: [],
-      fields: [],
-      langs: 'Australia',
-      fieldsData: this.props.fields,
+      askInputQuest: false,
       confirmQuestions: [],
       confirming: false,
       confirmResponse: '',
+      counterQuest: 1,
       countAppend: 1,
-      askInputQuest: false,
+      countIterable: 1,
       currentQuest: '',
+      questions: [],
+      fields: [],
+      fieldsData: this.props.data,
+      langs: 'United States',
+      recognizing: false,
+      recognition: {},
+      repeating: false,
     }
 
     componentDidMount() {
@@ -46,7 +48,6 @@ class FormDemo extends Component {
       } else {
         const SpeechRecognition = window.webkitSpeechRecognition;
         const speechSyn = window.speechSynthesis;
-        const { confirmQuestions, questions, counterQuest } = this.state;
 
         this.state.recognition = new SpeechRecognition();
         const utterance = new SpeechSynthesisUtterance();
@@ -57,35 +58,22 @@ class FormDemo extends Component {
         recognition.interimResults = true;
 
         recognition.onstart = () => {
-          const { confirming, questions } = this.state;
+          const { currentQuest } = this.state;
           utterance.lang = 'en-US';
           utterance.rate = 1.2;
-
-          if (confirming) {
-            utterance.text = confirmQuestions[this.getCounterQuest() - 1];
-            confirmQuestions[this.getCounterQuest() - 1] = undefined;
-          } else {
-            utterance.text = questions[this.getCounterQuest()];
-
-            this.setState(prevState => {
-              return {
-                counterQuest: prevState.counterQuest + 1,
-                confirmResponse: '',
-              };
-            });
-          }
+          utterance.text = currentQuest;
           speechSyn.speak(utterance);
         };
 
         recognition.onresult = event => {
           let transcription = '';
-          const { fields, confirming } = this.state;
+          const { fields, confirming, repeating } = this.state;
           const { dispatch } = this.props;
           for (let i = event.resultIndex; i < event.results.length; i += 1) {
             transcription += event.results[i][0].transcript;
           }
 
-          if (confirming) {
+          if (confirming || repeating) {
             this.setState({ confirmResponse: transcription });
           } else {
             dispatch(change('voiceForm', fields[this.getCounterQuest() - 1], this.capitalize(transcription)));
@@ -93,28 +81,74 @@ class FormDemo extends Component {
         };
 
         recognition.onend = () => {
-          this.addAnother();
-          const { counterQuest, questions } = this.state;
-          if (this.isThereConfirmQuest() || counterQuest < questions.length) {
-            setTimeout(() => { recognition.start(); }, 2000);
+          this.dinamycAnswer();
+          if (this.restart()) {
+            setTimeout(() => { recognition.start(); }, 1100);
             this.setState({ recognizing: false });
           }
         };
       }
     }
 
-  addAnother = () => {
+  dinamycAnswer = () => {
     const words = ['yes', 'jazz', 'just'];
-    const { confirming, confirmResponse } = this.state;
-    if (words.includes(confirmResponse) && confirming) {
+    const { confirming, confirmResponse, repeating } = this.state;
+    const affirmation = words.includes(confirmResponse);
+    if (affirmation && confirming) {
       this.appendField();
+    } else if (affirmation === false && confirming) {
+      this.setState({ countAppend: 1 });
+    } else if (affirmation && repeating) {
+      this.setState(prevState => {
+        return {
+          counterQuest: prevState.counterQuest - 1,
+          countIterable: prevState.countIterable - 1,
+          askInputQuest: true,
+        };
+      });
     }
+  }
+
+  restart = () => {
+    const { repeating, counterQuest } = this.state;
+    if (repeating === false) {
+      this.setState({
+        currentQuest: 'Would you like to repeat this question?',
+        repeating: true,
+      });
+      return true;
+    }
+
+    if (this.isThereConfirmQuest()) {
+      const { confirmQuestions } = this.state;
+      this.setState({ currentQuest: confirmQuestions[counterQuest - 1] });
+      confirmQuestions[this.getCounterQuest() - 1] = undefined;
+      return true;
+    }
+
+    const { askInputQuest, questions } = this.state;
+    if (askInputQuest && counterQuest < questions.length) {
+      this.setState(prevState => {
+        return {
+          currentQuest: questions[counterQuest],
+          counterQuest: prevState.counterQuest + 1,
+          countIterable: prevState.countIterable + 1,
+          askInputQuest: false,
+          repeating: false,
+          confirmResponse: '',
+        };
+      });
+      return true;
+    }
+
+    return false;
   }
 
   isThereConfirmQuest = () => {
     const { confirmQuestions } = this.state;
+
     if (typeof confirmQuestions[this.getCounterQuest() - 1] === 'undefined') {
-      this.setState({ confirming: false });
+      this.setState({ confirming: false, askInputQuest: true });
       return false;
     }
 
@@ -123,24 +157,27 @@ class FormDemo extends Component {
   }
 
   appendField = () => {
-    const { fieldsData: { textFields }, counterQuest, fields, questions, confirmQuestions, countAppend } = this.state;
-    const { id, name, type, question, errorText, className, confirmQuestion } = textFields[counterQuest - 1];
-    const newTextfield = {
-      id: id.concat(countAppend),
-      name: name.concat(countAppend),
-      type,
-      question,
-      errorText,
-      className,
-      confirmQuestion,
-    };
-    textFields.splice(counterQuest, 0, newTextfield);
-    fields.splice(counterQuest, 0, newTextfield.name);
+    const {
+      fieldsData: { textFields },
+      counterQuest,
+      fields,
+      questions,
+      confirmQuestions,
+      countAppend,
+      countIterable,
+    } = this.state;
+
+    const { name, question, confirmQuestion } = textFields[countIterable - 1];
+    const newName = name.concat(countAppend);
+    textFields[countIterable - 1].iterations.push(countAppend);
+    fields.splice(counterQuest, 0, newName);
     questions.splice(counterQuest, 0, question);
     confirmQuestions.splice(counterQuest, 0, confirmQuestion);
     this.setState(prevState => {
       return {
         countAppend: prevState.countAppend + 1,
+        countIterable: prevState.countIterable - 1,
+        askInputQuest: true,
       };
     });
   }
@@ -182,7 +219,7 @@ class FormDemo extends Component {
 
      this.setState({
        recognizing: true,
-       counterQuest: 0,
+       counterQuest: 1,
      });
 
      recognition.lang = langs;
@@ -196,7 +233,6 @@ class FormDemo extends Component {
   render() {
     const { handleSubmit, submitting, loading, invalid, title, logo } = this.props;
     const { fieldsData: { textFields } } = this.state;
-
     return (
       <Page background="white">
 
@@ -206,19 +242,36 @@ class FormDemo extends Component {
         <Title color="purple" tag="h3" className="title">{title}</Title>
 
         <Form name="voiceForm" onSubmit={handleSubmit(this.mySubmit)} className="form">
-          <div className="row">
-
+          <div className="form-body">
             {textFields.map(textfield => (
-              <TextField
-                key={textfield.id}
-                id={textfield.id}
-                name={textfield.name}
-                type={textfield.type}
-                label={textfield.label}
-                errorText={textfield.errorText}
-                className={textfield.className}
-                multiLine={!!textfield.multiLine}
-              />
+              <div className={`row ${textfield.className}`} key={textfield.id}>
+                <div className="column">
+                  <TextField
+                    key={textfield.id}
+                    id={textfield.id}
+                    name={textfield.name}
+                    type={textfield.type}
+                    label={textfield.label}
+                    errorText={textfield.errorText}
+                    multiLine={!!textfield.multiLine}
+                    iterable={!!textfield.iterations}
+                  />
+
+                  {textfield.iterations
+                      && textfield.iterations.map(iteration => (
+                        <TextField
+                          key={`${textfield.id}${iteration}`}
+                          id={`${textfield.id}${iteration}`}
+                          name={`${textfield.name}${iteration}`}
+                          type={textfield.type}
+                          errorText={textfield.errorText}
+                          multiLine={!!textfield.multiLine}
+                          iterable={!!textfield.iterations}
+                        />
+                      ))
+                  }
+                </div>
+              </div>
             ))}
 
             <div className="button-space">
@@ -234,3 +287,10 @@ class FormDemo extends Component {
 }
 
 export default FormDemo;
+// https://stackoverflow.com/questions/38364400/index-inside-map-function
+// https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_two_columns_flex
+// dejar en objetos jsno iterables name,id,question y confonformQuest y poner un atributo list: [] que sera la lista
+// de objetos iterables con los datos necesarios para los textField, al renderizar el id
+// y name se cambiaran con un resultIndex
+// para que sean unicos
+// Solo habra que cambiar getInputs y appendField

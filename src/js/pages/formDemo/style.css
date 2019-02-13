@@ -8,14 +8,63 @@
   font-family: 'Work Sans';
 }
 
-.row{
+.form-body{
   width: 90%;
   padding: 5%;
   border: 1px solid black;
+}
+
+.row {
+  display: flex;
+}
+
+.col-1{
+  width: 99%;
+}
+
+.col-2{
+  width: 47.5%;
+  display: inline-block;
+  vertical-align:top;
+  margin-right: 2.5%;
+}
+
+.col-3{
+  width: 30.5%;
+  display: inline-block;
+  vertical-align:top;
+  margin-right: 2.75%;
+}
+
+.col-2-center{
+  width: 47.5%;
+  margin:auto;
+  margin-bottom: 22px;
+  vertical-align:top;
+}
+
+.col-3-center{
+  width: 30.5%;
+  margin:auto;
+  margin-bottom: 22px;
+  vertical-align:top;
+}
+
+/* Create two equal columns that sits next to each other */
+.column {
+  flex: 50%;
 }
 
 .button-space{
   margin:auto;
   margin-top: 70px;
   width: 200px;
+}
+
+/* Create two equal columns that sits next to each other */
+.column-col-2 {
+  float: left;
+  width:47.5%;
+  margin-right: 2.5%;
+  margin-bottom: 22px;
 }

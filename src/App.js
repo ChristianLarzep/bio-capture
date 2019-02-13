@@ -25,7 +25,7 @@ class App extends Component {
     return (
       <div className="App">
         <Provider store={store}>
-          <FormDemo onSubmit={this.submit} fields={data} title="Bio capture" logo={logo} />
+          <FormDemo onSubmit={this.submit} data={data} title="Bio capture" logo={logo} />
         </Provider>
       </div>
     );
