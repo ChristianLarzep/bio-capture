@@ -16,7 +16,7 @@
       "label":"Role",
       "question":"What is your role?",
       "errorText":"Role required",
-      "className": "col-3"
+      "className": "col-2"
     },
     {
       "id":"profile",

@@ -230,6 +230,18 @@ class FormDemo extends Component {
     this.setState({ langs: e.target.value });
   }
 
+  deleteIterable = (indexT, indexE, fieldName) => {
+    const { fieldsData, fields } = this.state;
+    const { dispatch } = this.props;
+    const element = fieldsData.textFields[indexT].iterations;
+    const indexF = fields.indexOf(fieldName);
+
+    fieldsData.textFields[indexT].iterations.splice(element.indexOf(element[indexE]), 1);
+    dispatch(change('voiceForm', fields[indexF], ''));
+
+    this.setState({ fieldsData });
+  }
+
   render() {
     const { handleSubmit, submitting, loading, invalid, title, logo } = this.props;
     const { fieldsData: { textFields } } = this.state;
@@ -243,7 +255,7 @@ class FormDemo extends Component {
 
         <Form name="voiceForm" onSubmit={handleSubmit(this.mySubmit)} className="form">
           <div className="form-body">
-            {textFields.map(textfield => (
+            {textFields.map((textfield, indexT) => (
               <div className={`row ${textfield.className}`} key={textfield.id}>
                 <div className="column">
                   <TextField
@@ -258,16 +270,26 @@ class FormDemo extends Component {
                   />
 
                   {textfield.iterations
-                      && textfield.iterations.map(iteration => (
-                        <TextField
-                          key={`${textfield.id}${iteration}`}
-                          id={`${textfield.id}${iteration}`}
-                          name={`${textfield.name}${iteration}`}
-                          type={textfield.type}
-                          errorText={textfield.errorText}
-                          multiLine={!!textfield.multiLine}
-                          iterable={!!textfield.iterations}
-                        />
+                      && textfield.iterations.map((element, indexE) => (
+                        <div key={`${textfield.id}${element}`}>
+                          <div className="editable">
+                            <TextField
+                              id={`${textfield.id}${element}`}
+                              name={`${textfield.name}${element}`}
+                              type={textfield.type}
+                              errorText={textfield.errorText}
+                              multiLine={!!textfield.multiLine}
+                              iterable={!!textfield.iterations}
+                            />
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => this.deleteIterable(indexT, indexE, `${textfield.id}${element}`)}
+                            className="close"
+                          >
+                            X
+                          </button>
+                        </div>
                       ))
                   }
                 </div>
