@@ -47,7 +47,7 @@
       "errorText":"Skill required",
       "className": "col-2",
       "confirmQuestion": "Do you want to add another soft skill?",
-      "iterations":[]
+      "iterations":[1]
     }
   ]
 }

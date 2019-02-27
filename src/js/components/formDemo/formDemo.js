@@ -10,6 +10,28 @@ import Header from './components';
 
 import './style.css';
 
+const SpeechRecognition = window.webkitSpeechRecognition;
+const initialstate = data => {
+  return {
+    askInputQuest: false,
+    confirmQuestions: [],
+    confirming: false,
+    confirmResponse: '',
+    counterQuest: 1,
+    countAppend: 1,
+    countIterable: 1,
+    currentQuest: '',
+    questions: [],
+    fields: [],
+    fieldsData: data,
+    langs: 'United States',
+    recognizing: false,
+    recognition: new SpeechRecognition(),
+    repeating: false,
+  };
+};
+
+
 @reduxForm({ form: 'voiceForm', validate: validator })
 class FormDemo extends Component {
   static propTypes = {
@@ -24,73 +46,62 @@ class FormDemo extends Component {
     onSubmit: PropTypes.func,
   };
 
-    state = {
-      askInputQuest: false,
-      confirmQuestions: [],
-      confirming: false,
-      confirmResponse: '',
-      counterQuest: 1,
-      countAppend: 1,
-      countIterable: 1,
-      currentQuest: '',
-      questions: [],
-      fields: [],
-      fieldsData: this.props.data,
-      langs: 'United States',
-      recognizing: false,
-      recognition: {},
-      repeating: false,
+  constructor(props) {
+    super(props);
+    this.state = initialstate(props.data);
+  }
+
+  componentWillMount() {
+    this.resetState();// TODO
+    this.getInputs();
+  }
+
+  componentDidMount() {
+    if (!('webkitSpeechRecognition' in window)) {
+    // TODO
+    // upgrade();
+    } else {
+      const speechSyn = window.speechSynthesis;
+
+      const utterance = new SpeechSynthesisUtterance();
+
+      const { recognition } = this.state;
+
+      recognition.continuous = false;
+      recognition.interimResults = true;
+
+      recognition.onstart = () => {
+        const { currentQuest } = this.state;
+        utterance.lang = 'en-US';
+        utterance.rate = 1.2;
+        utterance.text = currentQuest;
+        speechSyn.speak(utterance);
+      };
+
+      recognition.onresult = event => {
+        let transcription = '';
+        const { fields, confirming, repeating } = this.state;
+        const { dispatch } = this.props;
+        for (let i = event.resultIndex; i < event.results.length; i += 1) {
+          transcription += event.results[i][0].transcript;
+        }
+
+        if (confirming || repeating) {
+          this.setState({ confirmResponse: transcription });
+        } else {
+          dispatch(change('voiceForm', fields[this.getCounterQuest() - 1], this.capitalize(transcription)));
+        }
+      };
+
+      recognition.onend = () => {
+        this.dinamycAnswer();
+        if (this.restart()) {
+          setTimeout(() => { recognition.start(); }, 1100);
+          this.setState({ recognizing: false });
+        }
+      };
     }
-
-    componentDidMount() {
-      this.getInputs();
-      if (!('webkitSpeechRecognition' in window)) {
-      // TODO
-      // upgrade();
-      } else {
-        const SpeechRecognition = window.webkitSpeechRecognition;
-        const speechSyn = window.speechSynthesis;
-
-        this.state.recognition = new SpeechRecognition();
-        const utterance = new SpeechSynthesisUtterance();
-
-        const { recognition } = this.state;
-
-        recognition.continuous = false;
-        recognition.interimResults = true;
-
-        recognition.onstart = () => {
-          const { currentQuest } = this.state;
-          utterance.lang = 'en-US';
-          utterance.rate = 1.2;
-          utterance.text = currentQuest;
-          speechSyn.speak(utterance);
-        };
-
-        recognition.onresult = event => {
-          let transcription = '';
-          const { fields, confirming, repeating } = this.state;
-          const { dispatch } = this.props;
-          for (let i = event.resultIndex; i < event.results.length; i += 1) {
-            transcription += event.results[i][0].transcript;
-          }
-
-          if (confirming || repeating) {
-            this.setState({ confirmResponse: transcription });
-          } else {
-            dispatch(change('voiceForm', fields[this.getCounterQuest() - 1], this.capitalize(transcription)));
-          }
-        };
-
-        recognition.onend = () => {
-          this.dinamycAnswer();
-          if (this.restart()) {
-            setTimeout(() => { recognition.start(); }, 1100);
-            this.setState({ recognizing: false });
-          }
-        };
-      }
-    }
+  }
 
   dinamycAnswer = () => {
     const words = ['yes', 'jazz', 'just'];
@@ -171,12 +182,24 @@ class FormDemo extends Component {
 
     const { name, question, confirmQuestion } = textFields[countIterable - 1];
     const newName = name.concat(countAppend);
-    textFields[countIterable - 1].iterations.push(countAppend);
-    fields.splice(counterQuest, 0, newName);
-    questions.splice(counterQuest, 0, question);
-    confirmQuestions.splice(counterQuest, 0, confirmQuestion);
+
+    const fieldsDataClone = Object.assign({}, this.state.fieldsData);
+    const fieldsClone = fields.slice(0);
+    const questionsClone = questions.slice(0);
+    const consfQuestClone = confirmQuestions.slice(0);
+
+    fieldsDataClone.textFields[countIterable - 1].iterations.push(countAppend);
+
+    fieldsClone.splice(counterQuest, 0, newName);
+    questionsClone.splice(counterQuest, 0, question);
+    consfQuestClone.splice(counterQuest, 0, confirmQuestion);
+
     this.setState(prevState => {
       return {
+        fieldsData: { ...fieldsDataClone },
+        fields: [...fieldsClone],
+        questions: [...questionsClone],
+        confirmQuestions: [...consfQuestClone],
         countAppend: prevState.countAppend + 1,
         countIterable: prevState.countIterable - 1,
         askInputQuest: true,
@@ -190,15 +213,22 @@ class FormDemo extends Component {
   }
 
   getInputs = () => {
-    const { questions, fields, confirmQuestions, fieldsData: { textFields }, counterQuest } = this.state;
-
+    const { fieldsData: { textFields }, counterQuest } = this.state;
+    const fields = [];
+    const questions = [];
+    const confirmQuestions = [];
     for (let i = 0; i < textFields.length; i += 1) {
       fields[i] = textFields[i].name;
       questions[i] = textFields[i].question;
       confirmQuestions[i] = textFields[i].confirmQuestion;
     }
 
-    this.setState({ currentQuest: questions[counterQuest - 1] });
+    this.setState({
+      currentQuest: questions[counterQuest - 1],
+      fields,
+      questions,
+      confirmQuestions,
+    });
   }
 
   capitalize = s => {
@@ -206,11 +236,17 @@ class FormDemo extends Component {
     return s.replace(firstChar, m => m.toUpperCase());
   }
 
-  mySubmit = data => {
+  mySubmit = values => {
     const { dispatch, onSubmit } = this.props;
+
     dispatch(reset('voiceForm'));
-    onSubmit(data);
+    onSubmit(values);
   };
+
+  resetState = () => {
+    const { data } = this.props;
+    this.setState(initialstate(data));
+  }
 
    onStart = () => {
      const { recognizing, langs, recognition } = this.state;
@@ -247,6 +283,7 @@ class FormDemo extends Component {
   render() {
     const { handleSubmit, submitting, loading, invalid, title, logo } = this.props;
     const { fieldsData: { textFields } } = this.state;
+
     return (
       <Page background="white">
 
