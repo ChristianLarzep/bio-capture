@@ -1,9 +1,11 @@
 import validate from '../lib/validate';
 
-import formVoiceValidations from './formVoice/formVoiceValidations';
+import agendaCaptureValidations from './agendaCapture/agendaCaptureValidation';
+import bioCaptureValidations from './bioCapture/bioCaptureValidations';
 
 export const constraints = {
-  ...formVoiceValidations,
+  ...bioCaptureValidations,
+  ...agendaCaptureValidations,
 };
 
 export default values => validate(values, constraints);

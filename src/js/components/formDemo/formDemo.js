@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { reduxForm, Form, change, reset } from 'redux-form';
 
-import { Page, Helmet, Title, TextField, Button } from '../../components';
+import { Page, Helmet, Title, TextField, Button } from '..';
+
 import validator from '../../configurations/validator';
 
 import Header from './components';
@@ -20,6 +21,7 @@ class FormDemo extends Component {
     logo: PropTypes.string,
     submitting: PropTypes.bool,
     title: PropTypes.string,
+    onSubmit: PropTypes.func,
   };
 
     state = {
@@ -205,9 +207,9 @@ class FormDemo extends Component {
   }
 
   mySubmit = data => {
-    const { dispatch } = this.props;
+    const { dispatch, onSubmit } = this.props;
     dispatch(reset('voiceForm'));
-    console.log(data);
+    onSubmit(data);
   };
 
    onStart = () => {
