@@ -14,13 +14,13 @@ class TextField extends Component {
       name,
       type,
       errorText,
-      className,
       multiLine,
+      iterable,
     } = this.props;
 
     const hasError = field.meta.touched && field.meta.invalid;
     const fieldType = multiLine ? 'textarea' : 'textfield';
-    const textfield = `${fieldType} ${className}`;
+    // const textfield = `${fieldType} ${className}`;
     let inputStyle; let textAreaStyle; let inputElement;
     const spanError = hasError ? 'display-error-text' : 'error-hidden';
 
@@ -28,7 +28,9 @@ class TextField extends Component {
       textAreaStyle = classnames({ multiLine: (hasError === false), errorTextarea: hasError });
       inputElement = (<textarea {...field.input} name={name} className={textAreaStyle} />);
     } else {
-      inputStyle = classnames({ 'input-text': (hasError === false), errorInput: hasError });
+      inputStyle = classnames({ 'input-text': (hasError === false && iterable === false),
+        'input-text-iterable': (hasError === false && iterable),
+        errorInput: hasError });
       inputElement = (
         <input
           id={id}
@@ -41,7 +43,7 @@ class TextField extends Component {
     }
 
     return (
-      <div className={textfield}>
+      <div className={fieldType}>
         {label && <div className="label"><span className="label-text">{label}</span></div>}
         {inputElement}
 
@@ -59,6 +61,7 @@ TextField.propTypes = {
   disabled: PropTypes.bool,
   errorText: PropTypes.node,
   id: PropTypes.string.isRequired,
+  iterable: PropTypes.bool,
   label: PropTypes.node,
   multiLine: PropTypes.bool,
   name: PropTypes.string.isRequired,

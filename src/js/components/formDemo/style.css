@@ -1,0 +1,99 @@
+
+.form{
+  padding-left: 3%;
+  padding-right: 3%;
+}
+
+.title{
+  font-family: 'Work Sans';
+}
+
+.form-body{
+  width: 90%;
+  padding: 5%;
+  border: 1px solid black;
+}
+
+.row {
+  display: flex;
+}
+
+.col-1{
+  width: 99%;
+}
+
+.col-2{
+  width: 47.5%;
+  display: inline-block;
+  vertical-align:top;
+  margin-right: 2.5%;
+}
+
+.col-3{
+  width: 30.5%;
+  display: inline-block;
+  vertical-align:top;
+  margin-right: 2.75%;
+}
+
+.col-2-center{
+  width: 47.5%;
+  margin:auto;
+  vertical-align:top;
+}
+
+.col-3-center{
+  width: 30.5%;
+  margin:auto;
+  vertical-align:top;
+}
+
+.column {
+  flex: 50%;
+}
+
+.button-space{
+  margin:auto;
+  margin-top: 70px;
+  width: 200px;
+}
+
+.column-col-2 {
+  float: left;
+  width:47.5%;
+  margin-right: 2.5%;
+  margin-bottom: 22px;
+}
+
+.editable{
+  width: 94%;
+  display: inline-block;
+  vertical-align:top;
+}
+.close {
+  display: inline-block;
+  width: 4%;
+  height: 4%;
+  margin-left: 10px;
+  opacity: 0.3;
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+.close:hover {
+  opacity: 1;
+}
+.close:before, .close:after {
+  content: ' ';
+  height: 33px;
+  width: 2px;
+  background-color: #333;
+}
+.close:before {
+  transform: rotate(45deg);
+}
+.close:after {
+  transform: rotate(-45deg);
+}

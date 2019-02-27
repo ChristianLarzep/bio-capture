@@ -8,14 +8,15 @@ import {
 
 import './index.css';
 
-import App from './App';
+import { BioCapture, AgendaCapture, Main } from './js/pages';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <Router>
     <Switch>
-      <Route path="/" component={App} />
-      <Route path="/bios-form" component={App} />
+      <Route exact path="/" component={Main} />
+      <Route exact path="/bio-capture" component={BioCapture} />
+      <Route exact path="/agenda-capture" component={AgendaCapture} />
     </Switch>
   </Router>,
   document.getElementById('root'),

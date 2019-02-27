@@ -11,4 +11,7 @@ module.exports = {
   techskill: {
     presence: true,
   },
+  softskill: {
+    presence: true,
+  },
 };

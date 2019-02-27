@@ -1,0 +1,33 @@
+{
+  "textFields":[
+    {
+      "id":"myname",
+      "name":"myname",
+      "type":"text",
+      "label":"Your name",
+      "question":"What is your name?",
+      "errorText":"Name required",
+      "className": "col-3-center"
+    },
+    {
+      "id":"date",
+      "name":"date",
+      "type":"text",
+      "label":"Date",
+      "question":"What day is it",
+      "errorText":"Date required",
+      "className": "col-3-center"
+    },
+    {
+      "id":"task",
+      "name":"task",
+      "type":"text",
+      "label":"Things to do",
+      "question":"What do you need to do?",
+      "errorText":"Task required",
+      "className": "col-2-center",
+      "confirmQuestion": "Do you have another thing to do?",
+      "iterations":[]
+    }
+  ]
+}

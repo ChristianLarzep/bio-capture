@@ -3,3 +3,4 @@ export Helmet from './Helmet';
 export TextField from './TextField';
 export Title from './Title';
 export Page from './Page';
+export FormDemo from './formDemo';
