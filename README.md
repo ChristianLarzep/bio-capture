@@ -1,5 +1,31 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Prerequisites
+
+### `Install Node.js`
+
+As a asynchronous event driven JavaScript runtime.
+[Download](https://nodejs.org/es/)
+
+### `Linter plugins in editor`
+
+In order to use eslint configurations its necesary to install several plugins.
+[Example here](https://blog.michelletorres.mx/aplicar-buenas-practicas-a-tu-codigo-de-js-con-eslint/)
+
+#### Files
+    .eslintrc : rules
+    .editorconfig : maintain consistent coding styles for multiple developers working on the same
+                    project across various editors and IDEs.
+
+### `Node package manager npm`
+
+npm is distributed with Node.js which means that when you download Node.js,
+you automatically get npm installed on your computer.
+
+### `Download dependencies for project`
+
+`npm install`
+
 ## Available Scripts
 
 In the project directory, you can run:
@@ -7,7 +33,7 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:8080](http://localhost:8080) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
@@ -36,6 +62,23 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Google voice  API
+
+Code example [here](https://developers.google.com/web/updates/2013/01/Voice-Driven-Web-Apps-Introduction-to-the-Web-Speech-API)
+
+## Webpack Configuration
+
+Documentation [here](https://webpack.js.org/)
+
+#### Files
+     webpack.config.js
+     .babelrc : Babel is a toolchain that is mainly used to convert ECMAScript 2015+ code into a backwards compatible
+                version  of JavaScript.
+
+## Validate.js
+
+Documentation [here](https://validatejs.org/)
 
 ## Learn More
 
