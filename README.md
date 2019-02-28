@@ -15,7 +15,7 @@ In order to use eslint configurations its necesary to install several plugins.
 #### Files
     .eslintrc : rules
     .editorconfig : maintain consistent coding styles for multiple developers working on the same
-                      project across various editors  and IDEs
+                    project across various editors  and IDEs
 
 ### `Node package manager npm`
 
@@ -70,7 +70,11 @@ Documentation [here](https://webpack.js.org/)
 #### Files
      webpack.config.js
      .babelrc : Babel is a toolchain that is mainly used to convert ECMAScript 2015+ code into a backwards compatible
-                  version  of JavaScript.
+                version  of JavaScript.
+
+## Validate.js
+
+Documentation [here](https://validatejs.org/)
 
 ## Learn More
 
