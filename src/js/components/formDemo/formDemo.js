@@ -23,7 +23,7 @@ const initialstate = data => {
     currentQuest: '',
     questions: [],
     fields: [],
-    fieldsData: data,
+    fieldsData: { ...data },
     langs: 'United States',
     recognizing: false,
     recognition: new SpeechRecognition(),
@@ -48,15 +48,12 @@ class FormDemo extends Component {
 
   constructor(props) {
     super(props);
-    this.state = initialstate(props.data);
-  }
-
-  componentWillMount() {
-    this.resetState();// TODO
-    this.getInputs();
+    const dataCopy = JSON.parse(JSON.stringify(props.data));
+    this.state = { ...initialstate(dataCopy) };
   }
 
   componentDidMount() {
+    this.getInputs();
     if (!('webkitSpeechRecognition' in window)) {
     // TODO
     // upgrade();
@@ -171,6 +168,7 @@ class FormDemo extends Component {
 
   appendField = () => {
     const {
+      fieldsData,
       fieldsData: { textFields },
       counterQuest,
       fields,
@@ -183,23 +181,18 @@ class FormDemo extends Component {
     const { name, question, confirmQuestion } = textFields[countIterable - 1];
     const newName = name.concat(countAppend);
 
-    const fieldsDataClone = Object.assign({}, this.state.fieldsData);
-    const fieldsClone = fields.slice(0);
-    const questionsClone = questions.slice(0);
-    const consfQuestClone = confirmQuestions.slice(0);
+    fieldsData.textFields[countIterable - 1].iterations.push(countAppend);
 
-    fieldsDataClone.textFields[countIterable - 1].iterations.push(countAppend);
-
-    fieldsClone.splice(counterQuest, 0, newName);
-    questionsClone.splice(counterQuest, 0, question);
-    consfQuestClone.splice(counterQuest, 0, confirmQuestion);
+    fields.splice(counterQuest, 0, newName);
+    questions.splice(counterQuest, 0, question);
+    confirmQuestions.splice(counterQuest, 0, confirmQuestion);
 
     this.setState(prevState => {
       return {
-        fieldsData: { ...fieldsDataClone },
-        fields: [...fieldsClone],
-        questions: [...questionsClone],
-        confirmQuestions: [...consfQuestClone],
+        fieldsData: { ...fieldsData },
+        fields: [...fields],
+        questions: [...questions],
+        confirmQuestions: [...confirmQuestions],
         countAppend: prevState.countAppend + 1,
         countIterable: prevState.countIterable - 1,
         askInputQuest: true,
@@ -238,15 +231,9 @@ class FormDemo extends Component {
 
   mySubmit = values => {
     const { dispatch, onSubmit } = this.props;
-
     dispatch(reset('voiceForm'));
     onSubmit(values);
   };
-
-  resetState = () => {
-    const { data } = this.props;
-    this.setState(initialstate(data));
-  }
 
    onStart = () => {
      const { recognizing, langs, recognition } = this.state;

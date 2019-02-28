@@ -1,44 +1,6 @@
 {
   "textFields":[
     {
-      "id":"name",
-      "name":"name",
-      "type":"text",
-      "label":"Full name",
-      "question":"What is your name?",
-      "errorText":"Name required",
-      "className": "col-2"
-    },
-    {
-      "id":"role",
-      "name":"role",
-      "type":"text",
-      "label":"Role",
-      "question":"What is your role?",
-      "errorText":"Role required",
-      "className": "col-2"
-    },
-    {
-      "id":"profile",
-      "name":"profile",
-      "label":"Profile",
-      "question":"Describe your self",
-      "errorText":"Profile required",
-      "className": "col-1",
-      "multiLine": true
-    },
-    {
-      "id":"techskill",
-      "name":"techskill",
-      "type":"text",
-      "label":"Technical skills",
-      "question":"What technical skill do you have?",
-      "errorText":"Skill required",
-      "className": "col-2",
-      "confirmQuestion": "Do you want to add another technical skill?",
-      "iterations":[]
-    },
-    {
       "id":"softskill",
       "name":"softskill",
       "type":"text",
