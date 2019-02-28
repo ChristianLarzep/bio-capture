@@ -1,4 +1,20 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+##Prerequisites
+
+### `Install Node.js`
+
+As a asynchronous event driven JavaScript runtime.
+[Download](https://nodejs.org/es/)
+
+### `Linter plugins in editor`
+
+In order to use eslint configurations its necesary install several plugins.
+[Example here](https://blog.michelletorres.mx/aplicar-buenas-practicas-a-tu-codigo-de-js-con-eslint/)
+
+### `Node package manager npm`
+
+npm is distributed with Node.js which means that when you download Node.js,
+you automatically get npm installed on your computer.
 
 ## Available Scripts
 
