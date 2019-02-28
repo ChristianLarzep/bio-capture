@@ -24,7 +24,7 @@ you automatically get npm installed on your computer.
 
 ### `Download dependencies for project`
 
-### `npm install`
+`npm install`
 
 ## Available Scripts
 
