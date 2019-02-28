@@ -15,12 +15,16 @@ In order to use eslint configurations its necesary to install several plugins.
 #### Files
     .eslintrc : rules
     .editorconfig : maintain consistent coding styles for multiple developers working on the same
-                    project across various editors  and IDEs
+                    project across various editors and IDEs.
 
 ### `Node package manager npm`
 
 npm is distributed with Node.js which means that when you download Node.js,
 you automatically get npm installed on your computer.
+
+### `Download dependencies for project`
+
+### `npm install`
 
 ## Available Scripts
 
