@@ -12,7 +12,7 @@ As a asynchronous event driven JavaScript runtime.
 In order to use eslint configurations its necesary to install several plugins.
 [Example here](https://blog.michelletorres.mx/aplicar-buenas-practicas-a-tu-codigo-de-js-con-eslint/)
 
-# Files
+#### Files
     `.eslintrc` : rules
     `.editorconfig` : maintain consistent coding styles for multiple developers working on the same
                       project across various editors  and IDEs
