@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-##Prerequisites
+## Prerequisites
 
 ### `Install Node.js`
 
@@ -54,11 +54,11 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-##Google voice  API
+## Google voice  API
 
 Code example [here](https://developers.google.com/web/updates/2013/01/Voice-Driven-Web-Apps-Introduction-to-the-Web-Speech-API)
 
-##Webpack Configuration
+## Webpack Configuration
 
 Documentation [here](https://webpack.js.org/)
 
